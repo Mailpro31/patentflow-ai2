@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+backend/venv/
+backend/.venv/
+__pycache__/
+*.pyc
+
+# Environment variables
+.env
+.env.production
+.env.local
+backend/.env
+frontend/.env
+
+# Build outputs
+dist/
+build/
+*.zip
+patentflow_migration.zip
+
+# IDEs
+.vscode/
+.idea/
+
+# System
+.DS_Store
+Thumbs.db

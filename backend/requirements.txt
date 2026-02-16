@@ -27,7 +27,8 @@ httpx==0.26.0
 
 # Vertex AI and Embeddings
 google-cloud-aiplatform>=1.38.0
-sentence-transformers>=2.2.2
+# sentence-transformers installed manually in Dockerfile to enforce CPU only
+# sentence-transformers>=2.2.2
 # torch and torchvision are installed manually in Dockerfile (CPU version)
 # to save build time and space. Do not uncomment.
 # torch>=2.0.0

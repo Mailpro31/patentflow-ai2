@@ -31,6 +31,9 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
 # ⚡ SPEED UP: Install PyTorch CPU only first using uv
 RUN uv pip install --system --no-cache torch torchvision --index-url https://download.pytorch.org/whl/cpu
 
+# ⚡ SPEED UP: Install heavy AI libs with CPU index explicitly
+RUN uv pip install --system --no-cache sentence-transformers --index-url https://download.pytorch.org/whl/cpu
+
 # Install Python dependencies using uv, enforcing CPU versions for all sub-dependencies
 RUN uv pip install --system --no-cache -r requirements.txt --extra-index-url https://download.pytorch.org/whl/cpu
 
@@ -47,7 +50,8 @@ USER appuser
 EXPOSE 8000
 
 # Health check
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+# Health check (Increased start-period for AI model loading)
+HEALTHCHECK --interval=30s --timeout=30s --start-period=120s --retries=3 \
     CMD curl -f http://localhost:8000/health || exit 1
 
 # Run the application

@@ -23,12 +23,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Copy dependencies from backend folder
 COPY backend/requirements.txt .
 
-# ⚡ SPEED UP: Install PyTorch CPU only first (Cached layer)
-# This prevents downloading specific huge GPU versions and speeds up build
-RUN pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cpu
+# ⚡ SPEED UP: Install uv (extremely fast pip replacement)
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# ⚡ SPEED UP: Install PyTorch CPU only first using uv
+RUN uv pip install --system --no-cache torch torchvision --index-url https://download.pytorch.org/whl/cpu
+
+# Install Python dependencies using uv
+RUN uv pip install --system --no-cache -r requirements.txt
 
 # Copy application code from backend folder
 COPY backend/app ./app

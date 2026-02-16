@@ -28,32 +28,10 @@ httpx==0.26.0
 # Vertex AI and Embeddings
 google-cloud-aiplatform>=1.38.0
 sentence-transformers>=2.2.2
-torch>=2.0.0
-
-# Web Scraping
-beautifulsoup4>=4.12.2
-lxml>=5.1.0
-
-# Gemini AI
-google-generativeai>=0.3.2
-
-# Image Processing
-Pillow>=10.1.0
-numpy>=1.24.3
-opencv-python-headless>=4.8.1.78
-
-# Stable Diffusion
-replicate>=0.22.0
-
-# Vectorization
-pypotrace== 0.3.0
-scour==0.38.2
-
-# SAM2 (Segment Anything Model 2)
-# Note: Install via pip install git+https://github.com/facebookresearch/segment-anything-2.git
-# Or uncomment below:
-# git+https://github.com/facebookresearch/segment-anything-2.git
-torchvision>=0.16.0
+# torch and torchvision are installed manually in Dockerfile (CPU version)
+# to save build time and space. Do not uncomment.
+# torch>=2.0.0
+# torchvision>=0.16.0
 
 # SVG Processing (Force rebuild)
 svgwrite==1.4.3

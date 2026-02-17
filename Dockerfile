@@ -41,6 +41,7 @@ RUN uv pip install --system --no-cache -r requirements.txt --extra-index-url htt
 COPY backend/app ./app
 COPY backend/alembic ./alembic
 COPY backend/alembic.ini .
+COPY backend/run_app.py .
 
 # Create non-root user
 RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app
@@ -49,11 +50,10 @@ USER appuser
 # Expose port
 EXPOSE 8000
 
-# Health check
 # Health check (Increased start-period for AI model loading)
 HEALTHCHECK --interval=30s --timeout=30s --start-period=120s --retries=3 \
     CMD curl -f http://localhost:${PORT:-8000}/health || exit 1
 
-# Run the application
-# Run the application using shell form to allow variable expansion
-CMD sh -c "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"
+# Run the application using Python script to avoid shell variable expansion issues
+# Run the application using Python script
+CMD ["python", "run_app.py"]
